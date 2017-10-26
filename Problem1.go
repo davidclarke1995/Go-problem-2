@@ -1,5 +1,6 @@
-// Problem 1
+// Problem 2
 // David Clarke
+// Websites used https://golang.org/doc/articles/wiki/
 
 package main
 
@@ -10,11 +11,12 @@ import (
 
 func requestHandler(w http.ResponseWriter, r *http.Request) {
 
-	//Browser renders html tags
-	w.Header().Set("Content-Type","text/html");
+	//Changes the font to Bold
+	w.Header().Set("Content-Type","text/html")
 
 	//Output "Guessing Game" to browser
-	fmt.Fprintln(w, "Guessing Game")
+	fmt.Fprintln(w, "<h1>Guessing Game</h1>")
+
 }
 
 func main() {
