@@ -3,7 +3,7 @@
 // Websites used https://stackoverflow.com/questions/2906582/how-to-create-an-html-button-that-acts-like-a-link
 
 package main
-//imports
+// imports
 import (
 	"time"
 	"net/http"
