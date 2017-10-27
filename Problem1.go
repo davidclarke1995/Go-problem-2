@@ -1,8 +1,8 @@
-// Problem 5
+// Problem 6
 // David Clarke
 // Websites used https://stackoverflow.com/questions/3676127/how-do-i-make-a-text-input-non-editable
 //https://stackoverflow.com/questions/19233415/how-to-make-type-number-to-positive-numbers-only
-//https://stackoverflow.com/questions/16517718/bootstrap-number-validation
+//https://stackoverflow.com/questions/12218670/how-to-increment-a-bootstrap-progress-bar
 
 package main
 //imports
@@ -16,6 +16,7 @@ import (
 
 type myMsg struct {
     Message string
+	Guess int
 }
 
 func requestHandler(w http.ResponseWriter, r *http.Request) {
@@ -31,10 +32,13 @@ func requestHandler(w http.ResponseWriter, r *http.Request) {
 func guessHandler(w http.ResponseWriter, r *http.Request){
 
 		 message :="Guess a number between 1 and 20"
+
+		 guess, _ := strconv.Atoi(r.FormValue("guess"))
 		
 			rand.Seed(time.Now().UTC().UnixNano())
 		
-			target:=0
+			target:= rand.Intn(20-1)
+
 			var cookie, err = r.Cookie("target")
 		
 			if err == nil{
@@ -51,12 +55,11 @@ func guessHandler(w http.ResponseWriter, r *http.Request){
 		
 			t, _ := template.ParseFiles("guess.tmpl")
 
-			t.Execute(w, &myMsg{Message:message})
+			t.Execute(w, &myMsg{Message:message, Guess:guess})
 }
 
 func main() {
 	http.HandleFunc("/", requestHandler)
 	http.HandleFunc("/guess", guessHandler)
-
 	http.ListenAndServe(":8080", nil)
 }

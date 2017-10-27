@@ -14,10 +14,13 @@
 
 	   <form class="form-inline" action="/guess" method="GET">
       <div class="form-group">
-        <input type="number" class="form-control" name="guess">
+        <input type="number" class="form-control" name="guess" value="Guess">
          </div> 
         <button type="submit" class="btn">Guess</button>
     </form> 
+
+    <h3>You guessed:</h3>
+    <h3>{{.Guess}}</h3>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
