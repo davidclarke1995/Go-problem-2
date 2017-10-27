@@ -1,9 +1,11 @@
-// Problem 4
+// Problem 5
 // David Clarke
-// Websites used https://stackoverflow.com/questions/2906582/how-to-create-an-html-button-that-acts-like-a-link
+// Websites used https://stackoverflow.com/questions/3676127/how-do-i-make-a-text-input-non-editable
+//https://stackoverflow.com/questions/19233415/how-to-make-type-number-to-positive-numbers-only
+//https://stackoverflow.com/questions/16517718/bootstrap-number-validation
 
 package main
-// imports
+//imports
 import (
 	"time"
 	"net/http"
@@ -28,7 +30,7 @@ func requestHandler(w http.ResponseWriter, r *http.Request) {
 
 func guessHandler(w http.ResponseWriter, r *http.Request){
 
-		message :="Guess a number between 1 and 20"
+		 message :="Guess a number between 1 and 20"
 		
 			rand.Seed(time.Now().UTC().UnixNano())
 		
@@ -37,20 +39,16 @@ func guessHandler(w http.ResponseWriter, r *http.Request){
 		
 			if err == nil{
 				
-				target, _ = strconv.Atoi(cookie.Value)
-				if target ==0{
-					target = rand.Intn(20-1)
-				}
-			}
-		
-			cookie = &http.Cookie{
+				cookie = &http.Cookie{
 				Name: "target",
 				Value: strconv.Itoa(target),
 				Expires: time.Now().Add(72 * time.Hour),
 			}
 			
-			http.SetCookie(w,cookie)
-			
+			http.SetCookie(w,cookie)	
+				
+			}
+		
 			t, _ := template.ParseFiles("guess.tmpl")
 
 			t.Execute(w, &myMsg{Message:message})
@@ -58,6 +56,7 @@ func guessHandler(w http.ResponseWriter, r *http.Request){
 
 func main() {
 	http.HandleFunc("/", requestHandler)
-	http.ListenAndServe(":8080", nil)
 	http.HandleFunc("/guess", guessHandler)
+
+	http.ListenAndServe(":8080", nil)
 }
