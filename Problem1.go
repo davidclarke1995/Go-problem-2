@@ -1,4 +1,4 @@
-// Problem 6
+// Problem 7
 // David Clarke
 // Websites used https://stackoverflow.com/questions/3676127/how-do-i-make-a-text-input-non-editable
 //https://stackoverflow.com/questions/19233415/how-to-make-type-number-to-positive-numbers-only
@@ -17,6 +17,8 @@ import (
 type myMsg struct {
     Message string
 	Guess int
+	check bool
+	NewMessage string
 }
 
 func requestHandler(w http.ResponseWriter, r *http.Request) {
@@ -52,10 +54,21 @@ func guessHandler(w http.ResponseWriter, r *http.Request){
 			http.SetCookie(w,cookie)	
 				
 			}
+
+			str := &myMsg{Message:message, Guess:guess, check: false}
 		
+			if guess == target{
+				str.NewMessage = "Well done !! You guessed Correctly!"
+				str.check = true
+			}else if guess > target{
+				str.NewMessage = "Try again, guess is too high"
+			}else if guess < target{
+				str.NewMessage = "Try again, guess is too low"
+			}
+
 			t, _ := template.ParseFiles("guess.tmpl")
 
-			t.Execute(w, &myMsg{Message:message, Guess:guess})
+			t.Execute(w, str)
 }
 
 func main() {
